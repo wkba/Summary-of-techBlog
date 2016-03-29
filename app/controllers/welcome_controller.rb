@@ -52,7 +52,7 @@ class WelcomeController < ApplicationController
     render :nothing => true
   end
   def anLike
-    BlogInfo.delete_all(["user_id = ? and title = ? and like = ?",params[:user_id], params[:title], "t"]) 
+    BlogInfo.delete_all(["user_id = ? and title = ? and like = ?",params[:user_id], params[:title], "true"]) 
     render :nothing => true
   end
 
@@ -61,7 +61,7 @@ class WelcomeController < ApplicationController
     render :nothing => true
   end
   def anLater
-    LaterBlog.delete_all(["user_id = ? and title = ? and later = ?",params[:user_id], params[:title], "t"]) 
+    LaterBlog.delete_all(["user_id = ? and title = ? and later = ?",params[:user_id], params[:title], "true"]) 
     render :nothing => true
   end
 
@@ -73,8 +73,8 @@ class WelcomeController < ApplicationController
   def setInfo(status)
     if logged_in? then
       @user_id = session[:user_id]
-      like_list_id =  BlogInfo.where("user_id = ? and like = ?",@user_id,"t")
-      later_list_id =  LaterBlog.where("user_id = ? and later = ?",@user_id,"t")
+      like_list_id =  BlogInfo.where("user_id = ? and like = ?",@user_id,"true")
+      later_list_id =  LaterBlog.where("user_id = ? and later = ?",@user_id,"true")
       id_arr = []
       like_list_id.each do |n|
         id_arr << n.entry_id
