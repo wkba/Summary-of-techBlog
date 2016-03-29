@@ -83,6 +83,7 @@ class WelcomeController < ApplicationController
         id_arr << n.entry_id
       end
     end
+    info = Infomation.page(params[:page]).per(PER).order(:date).reverse_order
     if status== "new" then
       info = Infomation.page(params[:page]).per(PER).order(:date).reverse_order.where.not(id: id_arr)
     elsif status == "hatebu"
