@@ -87,7 +87,7 @@ class WelcomeController < ApplicationController
     if status== "new" then
       info = Infomation.page(params[:page]).per(PER).order(:date).reverse_order.where.not(id: id_arr)
     elsif status == "hatebu"
-      info = Infomation.page(params[:page]).per(PER).order(:hatebu).reverse_order.where.not(id: id_arr)
+      info = Infomation.page(params[:page]).per(PER).order(:hatebu).reverse_order.where.not(id: id_arr).where.not(hatebu: 0)
     elsif status == "like"
       info = BlogInfo.page(params[:page]).per(PER).order(:date).reverse_order.where("user_id = ?",@user_id.to_s)
     elsif status == "later"
