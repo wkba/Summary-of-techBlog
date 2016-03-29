@@ -48,20 +48,20 @@ class WelcomeController < ApplicationController
   end
 
   def addLike
-    like =BlogInfo.create(user_id: params[:user_id], entry_id: params[:entry_id],like: "true",url: params[:url],title: params[:title],siteName: params[:siteName],date: params[:date]) 
+    like =BlogInfo.create(user_id: params[:user_id], entry_id: params[:entry_id],like: true,url: params[:url],title: params[:title],siteName: params[:siteName],date: params[:date]) 
     render :nothing => true
   end
   def anLike
-    BlogInfo.delete_all(["user_id = ? and title = ? and like = ?",params[:user_id], params[:title], "true"]) 
+    BlogInfo.delete_all(["user_id = ? and title = ? and like = ?",params[:user_id], params[:title], true]) 
     render :nothing => true
   end
 
   def addLater
-    later =LaterBlog.create(user_id: params[:user_id], entry_id: params[:entry_id],later: "true",url: params[:url],title: params[:title],siteName: params[:siteName],date: params[:date]) 
+    later =LaterBlog.create(user_id: params[:user_id], entry_id: params[:entry_id],later: true,url: params[:url],title: params[:title],siteName: params[:siteName],date: params[:date]) 
     render :nothing => true
   end
   def anLater
-    LaterBlog.delete_all(["user_id = ? and title = ? and later = ?",params[:user_id], params[:title], "true"]) 
+    LaterBlog.delete_all(["user_id = ? and title = ? and later = ?",params[:user_id], params[:title], true]) 
     render :nothing => true
   end
 
@@ -73,8 +73,8 @@ class WelcomeController < ApplicationController
   def setInfo(status)
     if logged_in? then
       @user_id = session[:user_id]
-      like_list_id =  BlogInfo.where("user_id = ? and like = ?",@user_id,"true")
-      later_list_id =  LaterBlog.where("user_id = ? and later = ?",@user_id,"true")
+      like_list_id =  BlogInfo.where("user_id = ? and like = ?",@user_id,true)
+      later_list_id =  LaterBlog.where("user_id = ? and later = ?",@user_id,true)
       id_arr = []
       like_list_id.each do |n|
         id_arr << n.entry_id
