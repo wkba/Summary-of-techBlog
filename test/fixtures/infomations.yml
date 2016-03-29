@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  siteName: MyString
+  siteURL: MyString
+  title: MyString
+  description: MyString
+  stocked: 1
+  liked: 
+
+two:
+  siteName: MyString
+  siteURL: MyString
+  title: MyString
+  description: MyString
+  stocked: 1
+  liked: 

@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: MyString
+  entry_id: 1
+  like: false
+  later: false
+  read: false
+  url: MyString
+  title: MyString
+  siteName: MyString
+  date: MyString
+
+two:
+  user_id: MyString
+  entry_id: 1
+  like: false
+  later: false
+  read: false
+  url: MyString
+  title: MyString
+  siteName: MyString
+  date: MyString

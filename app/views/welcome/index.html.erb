@@ -1,0 +1,73 @@
+<p class = "list-text-color"><%=@statusJa%></p>
+<% now = Time.zone.now %>
+<div id="sample">
+</div>
+
+<ul class="nav nav-tabs ">
+	<li role="presentation"><%= link_to '新着順', root_path(sort:"new"),:class=>"list-text-color" %></li>
+	<li role="presentation"><%= link_to 'はてぶ順', root_path(sort:"hatebu"),:class=>"list-text-color"%></li>
+<!--   <li role="presentation"><%= link_to '注目度順', root_path(sort:"hatebu"),:class=>"list-text-color"%></li>
+ --></ul>
+
+
+<div class="list-group">
+  <%i=0%>
+  <% if @info == nil then %>
+
+  <% else %>
+    <% @info.each do |entry| %>
+      <%i += 1%>
+      <div class="list-group-item-padding">
+        <%= link_to(entry.url, class: 'list-group-item') do %>
+          <p class="list-group-item-heading">
+          <%= entry.title %>
+          </p>
+
+          <h6 class="list-group-item-text">
+            <% if @status == "new" %>
+              <%= DateTime.parse(entry.date).strftime("%Y年 %m月 %d日 %H:%M")%>
+            <%elsif @status == "hatebu"%>
+              <%= entry.hatebu%> :book marks
+            <%else%>
+              <%= DateTime.parse(entry.date).strftime("%Y年 %m月 %d日 %H:%M")%>
+            <% end %>
+          </h6>
+
+          <h6 class="list-group-item-text">
+            <%= entry.siteName%>
+          </h6>
+        <% end %>
+
+        <% if logged_in? %>
+          <% if @status == "later" then%>
+
+            <%= form_tag({:controller => 'welcome', :action => 'anLater',user_id: @user_id,entry_id:entry.id,url:entry.url,title:entry.title,siteName:entry.siteName,date:entry.date}, :remote => true, :class => 'form-ajax') do %>
+                <%= hidden_field_tag :ajax_handler, 'handle_name1' %>
+                <%= submit_tag('後で読むから外す', :class => 'btn pull-right btn-default btn-s') %>
+            <% end %>
+          <% else %>
+            <%= form_tag({:controller => 'welcome', :action => 'addLater',user_id: @user_id,entry_id:entry.id,url:entry.url,title:entry.title,siteName:entry.siteName,date:entry.date}, :remote => true, :class => 'form-ajax') do %>
+            <%= hidden_field_tag :ajax_handler, 'handle_name1' %>
+            <%= submit_tag('後で読む', :class => 'btn pull-right btn-default btn-s') %>
+            <% end %>
+          <% end %> 
+
+
+          <% if @status == "like" then%>
+            <%= form_tag({:controller => 'welcome', :action => 'anLike',user_id: @user_id,entry_id:entry.id,url:entry.url,title:entry.title,siteName:entry.siteName,date:entry.date}, :remote => true, :class => 'form-ajax') do %>
+              <%= hidden_field_tag :ajax_handler, 'handle_name1' %>
+              <%= submit_tag('LIKEから外す', :class => 'btn pull-right btn-primary btn-s') %>
+            <% end %>
+          <% else %>
+            <%= form_tag({:controller => 'welcome', :action => 'addLike',user_id: @user_id,entry_id:entry.id,url:entry.url,title:entry.title,siteName:entry.siteName,date:entry.date}, :remote => true, :class => 'form-ajax') do %>
+              <%= hidden_field_tag :ajax_handler, 'handle_name1' %>
+              <%= submit_tag('LIKE', :class => 'btn pull-right btn-primary btn-s') %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+    <%= paginate @info %>
+  <% end %>
+
+</div>

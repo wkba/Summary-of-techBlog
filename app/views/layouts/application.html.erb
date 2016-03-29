@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Summary of techBlog</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%= include_gon %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+
+</head>
+  <body>
+   <div id="wrap">
+    <header class="navbar navbar-inverse" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <%= link_to 'Summary of techBlog', root_path, class: 'navbar-brand' %>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+        <!--     <li><%= link_to 'はじめに', welcome_begin_path %></li> -->
+            <% if logged_in? %>
+          　　
+                <li><%= link_to 'LIKE', root_path(sort:"like")%></li>
+                <li><%= link_to '後で読む', root_path(sort:"later")%></li>
+<!--                 <li><%= link_to '既読list', root_path(sort:"later")%></li>
+ -->              
+<!--               <li><%= link_to '設定', welcome_ans_path %></li>
+ -->              <li><%= link_to 'ログアウト', logout_path %></li>
+            <% else %>
+              <li><%= link_to 'Twitterでログイン', '/auth/twitter' %></li>
+            <% end %>
+            <li><%= link_to 'お問い合わせ', welcome_ans_path %></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+    <div class="container main-content">
+
+      <% if flash[:notice] %>
+        <div class="alert alert-success">
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
+      <% if flash[:alert] %>
+        <div class="alert alert-danger">
+          <%= flash[:alert] %>
+        </div>
+      <% end %>
+   
+      <%= yield %> 
+
+    </div>
+    </div>
+<!--     <footer class="footer">
+      <div class="container">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-6986194501206379"
+             data-ad-slot="3623782670"
+             data-ad-format="auto"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+    </footer> -->
+  </body>
+</html>
