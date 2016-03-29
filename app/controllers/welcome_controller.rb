@@ -73,8 +73,8 @@ class WelcomeController < ApplicationController
   def setInfo(status)
     if logged_in? then
       @user_id = session[:user_id]
-      like_list_id =  BlogInfo.where("user_id = ?",@user_id)
-      later_list_id =  LaterBlog.where("user_id = ?",@user_id)
+      like_list_id =  BlogInfo.where("user_id = ?",@user_id.to_s)
+      later_list_id =  LaterBlog.where("user_id = ?",@user_id.to_s)
       id_arr = []
       like_list_id.each do |n|
         id_arr << n.entry_id
@@ -89,9 +89,9 @@ class WelcomeController < ApplicationController
     elsif status == "hatebu"
       info = Infomation.page(params[:page]).per(PER).order(:hatebu).reverse_order.where.not(id: id_arr)
     elsif status == "like"
-      info = BlogInfo.page(params[:page]).per(PER).order(:date).reverse_order.where("user_id = ?",@user_id)
+      info = BlogInfo.page(params[:page]).per(PER).order(:date).reverse_order.where("user_id = ?",@user_id.to_s)
     elsif status == "later"
-      info = LaterBlog.page(params[:page]).per(PER).order(:date).reverse_order.where("user_id = ?",@user_id)
+      info = LaterBlog.page(params[:page]).per(PER).order(:date).reverse_order.where("user_id = ?",@user_id.to_s)
     end
     return info
   end
