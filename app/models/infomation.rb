@@ -1,3 +1,6 @@
+require 'open-uri'
+require 'rss'
+
 class Infomation < ActiveRecord::Base
 	validates :title, uniqueness: true
 	validates :description, uniqueness: true
