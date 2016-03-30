@@ -12,7 +12,7 @@ task :call_page => :environment do
       "http://techblog.yahoo.co.jp/index.xml",
       "http://ch.nicovideo.jp/dwango-engineer/blomaga/nico/feed",
       "http://rssblog.ameba.jp/ca-1pixel/rss20.xml",
-      "http://tech.kayac.com/atom.xml"
+      "http://tech.kayac.com/atom.xml",
       "https://tech.recruit-mp.co.jp/feed",
       "http://engineer.recruit-lifestyle.co.jp/archive/feed.xml",
       "https://tech.recruit-sumai.co.jp/feed",
