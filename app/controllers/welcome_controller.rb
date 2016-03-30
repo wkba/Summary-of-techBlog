@@ -26,7 +26,6 @@ class WelcomeController < ApplicationController
   end
 
   def ajax_action
-    
   end
 
 
