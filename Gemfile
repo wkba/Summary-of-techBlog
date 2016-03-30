@@ -60,3 +60,5 @@ gem 'kaminari-bootstrap'
 gem 'ransack'
 gem "gon"
 gem 'parallel'
+gem 'delayed_job_active_record'
+gem 'whenever', require: false
