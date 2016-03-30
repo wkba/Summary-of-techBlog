@@ -11,10 +11,23 @@ task :call_page => :environment do
       "http://techlog.voyagegroup.com/rss",
       "http://techblog.yahoo.co.jp/index.xml",
       "http://ch.nicovideo.jp/dwango-engineer/blomaga/nico/feed",
-      "http://rssblog.ameba.jp/ca-1pixel/rss20.xml"
+      "http://rssblog.ameba.jp/ca-1pixel/rss20.xml",
+      "http://tech.kayac.com/atom.xml"
+      "https://tech.recruit-mp.co.jp/feed",
+      "http://engineer.recruit-lifestyle.co.jp/archive/feed.xml",
+      "https://tech.recruit-sumai.co.jp/feed",
+      "http://tech.furyu.jp/blog/?feed=rss2",
+      "http://tech.cygames.co.jp/feed",
+      "http://blog.recruit-tech.co.jp/feed",
+      "http://klabgames.tech.blog.jp.klab.com/atom.xml",
+      "http://techblog.raccoon.ne.jp/atom.xml",
+      "http://blog.livedoor.jp/techblog/atom.xml",
+      "http://tech.camph.net/feed",
+      "http://techblog.rakuten.co.jp/index.xml",
+      "http://adtech.cyberagent.io/scalablog/feed",
+      "http://blog.nanapi.co.jp/tech/feed"
      ]
 
-     fh =[fh[rand(9)]]
     i = 0
     # parse rss
     fh.each do |url|
