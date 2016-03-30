@@ -1,14 +1,16 @@
-<p class = "list-text-color"><%=@statusJa%></p>
+<p class = "list-text-color text-muted"><%=@statusJa%></p>
+                 <HR align="center" size="0.5" width="100%">
+
 <% now = Time.zone.now %>
 <div id="sample">
 </div>
 
-<ul class="nav nav-tabs ">
+<!-- <ul class="nav nav-tabs ">
 	<li role="presentation"><%= link_to '新着順', root_path(sort:"new"),:class=>"list-text-color" %></li>
 	<li role="presentation"><%= link_to 'はてぶ順', root_path(sort:"hatebu"),:class=>"list-text-color"%></li>
-<!--   <li role="presentation"><%= link_to '注目度順', root_path(sort:"hatebu"),:class=>"list-text-color"%></li>
- --></ul>
-
+  <li role="presentation"><%= link_to '注目度順', root_path(sort:"hatebu"),:class=>"list-text-color"%></li>
+  </ul>
+ -->
 
 <div class="list-group">
   <%i=0%>

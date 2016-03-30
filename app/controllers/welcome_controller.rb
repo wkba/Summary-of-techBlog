@@ -52,7 +52,7 @@ class WelcomeController < ApplicationController
     render :nothing => true
   end
   def anLike
-    BlogInfo.delete_all(["user_id = ? and title = ? and like = ?",params[:user_id], params[:title], true]) 
+    BlogInfo.delete_all(["user_id = ? and title = ?",params[:user_id], params[:title]]) 
     render :nothing => true
   end
 
@@ -61,7 +61,7 @@ class WelcomeController < ApplicationController
     render :nothing => true
   end
   def anLater
-    LaterBlog.delete_all(["user_id = ? and title = ? and later = ?",params[:user_id], params[:title], true]) 
+    LaterBlog.delete_all(["user_id = ? and title = ?",params[:user_id], params[:title]]) 
     render :nothing => true
   end
 

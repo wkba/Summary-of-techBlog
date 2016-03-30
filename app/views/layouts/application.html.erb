@@ -36,14 +36,16 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
         <!--     <li><%= link_to 'はじめに', welcome_begin_path %></li> -->
+            <li><%= link_to '新着順', root_path(sort:"new")%></li>
+            <li><%= link_to 'はてぶ順', root_path(sort:"hatebu") %></li>
             <% if logged_in? %>
-          　　
                 <li><%= link_to 'LIKE', root_path(sort:"like")%></li>
                 <li><%= link_to '後で読む', root_path(sort:"later")%></li>
 <!--                 <li><%= link_to '既読list', root_path(sort:"later")%></li>
  -->              
 <!--               <li><%= link_to '設定', welcome_ans_path %></li>
- -->              <li><%= link_to 'ログアウト', logout_path %></li>
+ -->              
+                 <li><%= link_to 'ログアウト', logout_path %></li>
             <% else %>
               <li><%= link_to 'Twitterでログイン', '/auth/twitter' %></li>
             <% end %>
