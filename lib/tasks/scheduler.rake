@@ -41,7 +41,7 @@ task :call_page => :environment do
             end
             # puts "Hatebu Count: " + count
             Infomation.create(siteName:rss.channel.title, siteURL:rss.channel.link, title:item.title, description:item.description, date:item.pubDate.inspect, url:item.link ,stocked:0,liked:0,hatebu:count)
-            if i == 1 then
+            if i == 5 then
               break
             end
         end
