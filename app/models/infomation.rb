@@ -1,6 +1,51 @@
-
 class Infomation < ActiveRecord::Base
 	validates :title, uniqueness: true
 	validates :description, uniqueness: true
 	validates :url, uniqueness: true
+
+	def updateURL
+    fh = ["http://developer.hatenastaff.com/rss",
+      "http://techlife.cookpad.com/rss", 
+      "http://blog.cybozu.io/rss",
+      "http://labs.gree.jp/blog/rss",
+      "http://alpha.mixi.co.jp/rss",
+      "http://techlog.voyagegroup.com/rss",
+      "http://techblog.yahoo.co.jp/index.xml",
+      "http://ch.nicovideo.jp/dwango-engineer/blomaga/nico/feed",
+      "http://rssblog.ameba.jp/ca-1pixel/rss20.xml"
+     ]
+
+     fh =[fh[rand(9)]]
+    i = 0
+    # parse rss
+    fh.each do |url|
+
+        puts "URL: " + url
+        begin
+            rss = open(url){|file| RSS::Parser.parse(file.read)}
+        rescue => ex
+            puts ex.message
+            next
+        end
+        puts "Site: " + rss.channel.title
+
+        rss.items.each do |item|
+            #puts "Title: " + item.title
+            #puts item.date
+            # get hatebu count
+            # i = i + 1
+            begin
+              count = open("http://api.b.st-hatena.com/entry.count?url=" + item.link).read
+            rescue => ex
+              puts ex.message
+               next
+            end
+            # puts "Hatebu Count: " + count
+            Infomation.create(siteName:rss.channel.title, siteURL:rss.channel.link, title:item.title, description:item.description, date:item.pubDate.inspect, url:item.link ,stocked:0,liked:0,hatebu:count)
+            if i == 1 then
+              break
+            end
+        end
+    end
+  end
 end
