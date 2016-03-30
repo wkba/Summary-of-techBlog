@@ -1,10 +1,6 @@
-desc "This task is called by the Heroku scheduler add-on"
-task :update_feed => :environment do
-    puts "Updating feed..."
-    Infomation.updateURL
-    puts "done."
-end
- 
-task :send_reminders => :environment do
-    Infomation.updateURL
-end
+desc "This task is called by the Heroku cron add-on"
+task :call_page => :environment do
+   require 'net/http'
+   uri = URI.parse('http://yahoo.com/')
+   Net::HTTP.get(uri)
+ end
