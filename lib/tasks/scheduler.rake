@@ -25,8 +25,7 @@ task :call_page => :environment do
       "http://tech.camph.net/feed",
       "http://techblog.rakuten.co.jp/index.xml",
       "http://adtech.cyberagent.io/scalablog/feed",
-      "http://blog.nanapi.co.jp/tech/feed"
-     ]
+      "http://blog.nanapi.co.jp/tech/feed"]
 
     i = 0
     # parse rss
