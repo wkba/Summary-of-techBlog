@@ -27,12 +27,12 @@ task :call_page => :environment do
             next
         end
         puts "Site: " + rss.channel.title
-
+        i = 0
         rss.items.each do |item|
             #puts "Title: " + item.title
             #puts item.date
             # get hatebu count
-            # i = i + 1
+            i = i + 1
             begin
               count = open("http://api.b.st-hatena.com/entry.count?url=" + item.link).read
             rescue => ex
