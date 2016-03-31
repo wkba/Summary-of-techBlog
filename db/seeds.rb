@@ -12,7 +12,9 @@ require 'open-uri'
 require 'rss'
 
 # open url list
-    fh = ["https://tech.recruit-mp.co.jp/feed",
+    fh = [
+      "http://blog.wantedly.com/rss",
+      "https://tech.recruit-mp.co.jp/feed",
       # "http://engineer.recruit-lifestyle.co.jp/archive/feed.xml",
       "https://tech.recruit-sumai.co.jp/feed",
       "http://tech.furyu.jp/blog/?feed=rss2",
