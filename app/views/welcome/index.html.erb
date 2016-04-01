@@ -37,7 +37,6 @@
             <%elsif @status == "hatebu"%>
               <%= entry.hatebu%> :book marks
             <%else%>
-            <% if @status == "new" %>
               <% if entry.date != nil%>
                 <%= DateTime.parse(entry.date).strftime("%Y年 %m月 %d日 %H:%M")%>
               <% end %>
@@ -115,5 +114,4 @@ jQuery( function() {
     <% end %>
 } );
 </script>
-
 </div>
