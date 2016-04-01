@@ -64,6 +64,10 @@ class WelcomeController < ApplicationController
     render :nothing => true
   end
 
+  def notDisplay
+    notDisplay =NotDisplay.create(user_id: params[:user_id], entry_id: params[:entry_id]) 
+    render :nothing => true
+  end
   
 
 
@@ -74,11 +78,15 @@ class WelcomeController < ApplicationController
       @user_id = session[:user_id]
       like_list_id =  BlogInfo.where("user_id = ?",@user_id.to_s)
       later_list_id =  LaterBlog.where("user_id = ?",@user_id.to_s)
+      notDisplay_list_id =  NotDisplay.where("user_id = ?",@user_id.to_s)
       id_arr = []
       like_list_id.each do |n|
         id_arr << n.entry_id
       end
       later_list_id.each do |n|
+        id_arr << n.entry_id
+      end
+      notDisplay_list_id.each do |n|
         id_arr << n.entry_id
       end
     end

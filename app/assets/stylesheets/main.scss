@@ -1,6 +1,18 @@
 body{
 	background-color: #17184b !important;
 	// background-color: #0f2350 !important;
+	.box-left {
+	float: left;
+	margin:15px;
+    }
+    .box-right {
+	float: right;
+	margin:15px;
+    }
+
+	.boxContainer {
+		overflow: hidden;
+	}
 
 
 
@@ -9,7 +21,7 @@ body{
 		// 	text-align: right;
 		// }
 		.list-group-item-padding{
-			padding-bottom: 50px;
+			padding-bottom: 90px;
 		}
 		.list-group-item{
 			h4{

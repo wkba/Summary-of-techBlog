@@ -1,17 +1,31 @@
-<p class = "list-text-color text-muted"><%=@statusJa%></p>
-                 <HR align="center" size="0.5" width="100%">
 
+<div class="dropdown box-left">
+  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+    <%= @statusJa %>
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu">
+    <% if logged_in? %>
+      <li><%= link_to '新着順', root_path(sort:"new")%></li>
+      <li><%= link_to 'はてぶ順', root_path(sort:"hatebu") %></li>
+      <li role="presentation" class="divider"></li>
+      <li><%= link_to 'LIKE', root_path(sort:"like")%></li>
+      <li><%= link_to '後で読む', root_path(sort:"later")%></li>
+    <% else %>
+      <li><%= link_to '新着順', root_path(sort:"new")%></li>
+      <li><%= link_to 'はてぶ順', root_path(sort:"hatebu") %></li>
+    <% end %>
+  </ul>
+</div>
+
+  <div class="top-right-image box-right">
+  <%= link_to image_tag('reload.png',:size => '40x40'), '/?sort=' +@status %>
+  </div>
+
+<HR align="center" size="0.5" width="100%">
 <% now = Time.zone.now %>
 <div id="sample">
 </div>
-
-<!-- <ul class="nav nav-tabs ">
-	<li role="presentation"><%= link_to '新着順', root_path(sort:"new"),:class=>"list-text-color" %></li>
-	<li role="presentation"><%= link_to 'はてぶ順', root_path(sort:"hatebu"),:class=>"list-text-color"%></li>
-  <li role="presentation"><%= link_to '注目度順', root_path(sort:"hatebu"),:class=>"list-text-color"%></li>
-  </ul>
- -->
-
 
 
 <div class="list-group">
@@ -21,9 +35,10 @@
   <% else %>
     <% @info.each do |entry| %>
 
-      <%i += 1%>
+      <% i += 1 %>
 
-      <div class="list-group-item-padding" id ="card<%=i.to_s%>">
+      <div class="list-group-item-padding alert alert-dismissible fade in" id ="card<%=i.to_s%>">  
+          
         <%= link_to(entry.url, class: 'list-group-item') do %>
           <p class="list-group-item-heading">
           <%= entry.title %>
@@ -53,34 +68,40 @@
 
             <%= form_tag({:controller => 'welcome', :action => 'anLater',user_id: @user_id,entry_id:entry.id,url:entry.url,title:entry.title,siteName:entry.siteName,date:entry.date}, :remote => true, :class => 'form-ajax') do %>
                 <%= hidden_field_tag :ajax_handler, 'handle_name1' %>
-                <%= submit_tag('後で読むから外す', :class => 'btn pull-right btn-default btn-s', :id =>'jquery-ui-hide-an-read'+ i.to_s) %>
+                <%= submit_tag('後で読むから外す', :class => 'btn pull-right btn-default', :id =>'jquery-ui-hide-an-read'+ i.to_s) %>
             <% end %>
 
             <%= form_tag({:controller => 'welcome', :action => 'addLike',user_id: @user_id,entry_id:entry.id,url:entry.url,title:entry.title,siteName:entry.siteName,date:entry.date}, :remote => true, :class => 'form-ajax') do %>
               <%= hidden_field_tag :ajax_handler, 'handle_name1' %>
-              <%= submit_tag('LIKE', :class => 'btn pull-right btn-primary btn-s') %>
+              <%= submit_tag('LIKE', :class => 'btn pull-right btn-primary') %>
             <% end %>
 
             <% elsif @status == "like" then %>
 
               <%= form_tag({:controller => 'welcome', :action => 'addLater',user_id: @user_id,entry_id:entry.id,url:entry.url,title:entry.title,siteName:entry.siteName,date:entry.date}, :remote => true, :class => 'form-ajax') do %>
               <%= hidden_field_tag :ajax_handler, 'handle_name1' %>
-              <%= submit_tag('後で読む', :class => 'btn pull-right btn-default btn-s') %>
+              <%= submit_tag('後で読む', :class => 'btn pull-right btn-default') %>
               <% end %>
 
              <%= form_tag({:controller => 'welcome', :action => 'anLike',user_id: @user_id,entry_id:entry.id,url:entry.url,title:entry.title,siteName:entry.siteName,date:entry.date}, :remote => true, :class => 'form-ajax') do %>
               <%= hidden_field_tag :ajax_handler, 'handle_name1' %>
-              <%= submit_tag('LIKEから外す', :class => 'btn pull-right btn-primary btn-s', :id =>'jquery-ui-hide-an-like'+ i.to_s) %>
+              <%= submit_tag('LIKEから外す', :class => 'btn pull-right btn-primary', :id =>'jquery-ui-hide-an-like'+ i.to_s) %>
             <% end %>
 
           <% else %>
+
+            <%= form_tag({:controller => 'welcome', :action => 'notDisplay',user_id: @user_id,entry_id:entry.id}, :remote => true, :class => 'form-ajax') do %>
+              <%= hidden_field_tag :ajax_handler, 'handle_name1' %>
+              <%= submit_tag('×', :class => 'btn pull-left btn-default', :id =>'jquery-ui-hide-notDisplay-'+ i.to_s) %>
+            <% end %>
+
             <%= form_tag({:controller => 'welcome', :action => 'addLater',user_id: @user_id,entry_id:entry.id,url:entry.url,title:entry.title,siteName:entry.siteName,date:entry.date}, :remote => true, :class => 'form-ajax') do %>
             <%= hidden_field_tag :ajax_handler, 'handle_name1' %>
-            <%= submit_tag('後で読む', :class => 'btn pull-right btn-default btn-s',:id =>'jquery-ui-hide-read' + i.to_s) %>
+            <%= submit_tag('後で読む', :class => 'btn pull-right btn-default',:id =>'jquery-ui-hide-read' + i.to_s) %>
             <% end %>
             <%= form_tag({:controller => 'welcome', :action => 'addLike',user_id: @user_id,entry_id:entry.id,url:entry.url,title:entry.title,siteName:entry.siteName,date:entry.date}, :remote => true, :class => 'form-ajax') do %>
               <%= hidden_field_tag :ajax_handler, 'handle_name1' %>
-              <%= submit_tag('LIKE', :class => 'btn pull-right btn-primary btn-s', :id =>'jquery-ui-hide-like' + i.to_s) %>
+              <%= submit_tag('LIKE', :class => 'btn pull-right btn-primary', :id =>'jquery-ui-hide-like' + i.to_s) %>
             <% end %>
           <% end %>
         <% end %>
@@ -110,6 +131,11 @@ jQuery( function() {
     jQuery( '#jquery-ui-hide-an-like<%=n.to_s%>' ) . button();
     jQuery( '#jquery-ui-hide-an-like<%=n.to_s%>' ) . click( function() {
       jQuery( '#card<%=n.to_s%>' ) . hide( 'slide', '', 5000 );
+    } );
+
+    jQuery( '#jquery-ui-hide-notDisplay-<%=n.to_s%>' ) . button();
+    jQuery( '#jquery-ui-hide-notDisplay-<%=n.to_s%>' ) . click( function() {
+      jQuery( '#card<%=n.to_s%>' ) . hide( 'slide', '', 10 );
     } );
     <% end %>
 } );
