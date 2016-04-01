@@ -31,13 +31,13 @@
 
           <h6 class="list-group-item-text">
             <% if @status == "new" %>
-              <% if entry.date != nil%>
+              <% if entry.date != nil or ""%>
                 <%= DateTime.parse(entry.date).strftime("%Y年 %m月 %d日 %H:%M")%>
               <% end %>
             <%elsif @status == "hatebu"%>
               <%= entry.hatebu%> :book marks
             <%else%>
-              <% if entry.date != nil%>
+              <% if entry.date != nil or ""%>
                 <%= DateTime.parse(entry.date).strftime("%Y年 %m月 %d日 %H:%M")%>
               <% end %>
             <% end %>
