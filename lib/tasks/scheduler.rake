@@ -1,11 +1,8 @@
 desc "This task is called by the Heroku cron add-on"
-
 task :call_page => :environment do
   require 'net/http'
   require 'open-uri'
   require 'feed-normalizer'
-  require 'nokogiri'
-  require "date"
 
   fh = [
     "http://blog.mwed.info/feed.xml",
