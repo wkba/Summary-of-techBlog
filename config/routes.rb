@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   post 'welcome/anLike' => 'welcome#anLike'
   post 'welcome/addLater' => 'welcome#addLater'
   post 'welcome/anLater' => 'welcome#anLater'
+  post 'welcome/notDisplay' => 'welcome#notDisplay'
   get 'welcome/index'
   get '/auth/:provider/callback' => 'sessions#create'
   get '/logout' => 'sessions#destroy' , as: :logout
