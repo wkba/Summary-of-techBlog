@@ -11,7 +11,8 @@
 require 'open-uri'
 require 'feed-normalizer'
 require 'nokogiri'
-require "date"
+require 'date'
+require 'rss'
 
 def Eureka
   target_url = 'https://developers.eure.jp'
