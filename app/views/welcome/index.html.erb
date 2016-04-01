@@ -20,33 +20,9 @@
 
   <% else %>
     <% @info.each do |entry| %>
+      <% entry.date != nil%>
+
       <%i += 1%>
-
-<!--       <div class="list-group-item-padding">
-
-
-      <% if @smartphone_request then %>
-        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  
-        <ins class="adsbygoogle"
-             style="display:inline-block;width:728px;height:90px"
-             data-ad-client="ca-pub-6986194501206379"
-             data-ad-slot="5661285479"></ins>
-        <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-      <% else %>
-        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  
-        <ins class="adsbygoogle"
-             style="display:inline-block;width:320px;height:100px"
-             data-ad-client="ca-pub-6986194501206379"
-             data-ad-slot="2707819075"></ins>
-        <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-      <% end %>
-      </div> -->
 
       <div class="list-group-item-padding" id ="card<%=i.to_s%>">
         <%= link_to(entry.url, class: 'list-group-item') do %>
@@ -72,7 +48,6 @@
         <% if logged_in? %>
           <% if @status == "later" then%>
 
-<!-- later  -->
             <%= form_tag({:controller => 'welcome', :action => 'anLater',user_id: @user_id,entry_id:entry.id,url:entry.url,title:entry.title,siteName:entry.siteName,date:entry.date}, :remote => true, :class => 'form-ajax') do %>
                 <%= hidden_field_tag :ajax_handler, 'handle_name1' %>
                 <%= submit_tag('後で読むから外す', :class => 'btn pull-right btn-default btn-s', :id =>'jquery-ui-hide-an-read'+ i.to_s) %>
@@ -107,6 +82,7 @@
           <% end %>
         <% end %>
       </div>
+      <% end %>
     <% end %>
     <%= paginate @info %>
   <% end %>
