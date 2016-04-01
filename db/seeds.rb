@@ -141,7 +141,7 @@ fh = [
   "http://ch.nicovideo.jp/dwango-engineer/blomaga/nico/feed",
   "http://rssblog.ameba.jp/ca-1pixel/rss20.xml"]
 
-parse rss
+
 fh.each do |url|
     puts "URL: " + url
     begin
