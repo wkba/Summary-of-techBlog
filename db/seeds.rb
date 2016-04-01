@@ -9,20 +9,21 @@
 # coding: utf-8
 
 require 'open-uri'
-require 'rss'
+require 'feed-normalizer'
 
 # open url list
     fh = [
+      "http://engineer.wantedly.com/feed.xml",
+      "http://klabgames.tech.blog.jp.klab.com/atom.xml",
+      "http://techblog.raccoon.ne.jp/atom.xml",
+      "http://blog.livedoor.jp/techblog/atom.xml",
+      "http://engineer.recruit-lifestyle.co.jp/techblog/feed.xml",
       "http://blog.wantedly.com/rss",
       "https://tech.recruit-mp.co.jp/feed",
-      # "http://engineer.recruit-lifestyle.co.jp/archive/feed.xml",
       "https://tech.recruit-sumai.co.jp/feed",
       "http://tech.furyu.jp/blog/?feed=rss2",
       "http://tech.cygames.co.jp/feed",
       "http://blog.recruit-tech.co.jp/feed",
-      # "http://klabgames.tech.blog.jp.klab.com/atom.xml",
-      # "http://techblog.raccoon.ne.jp/atom.xml",
-      # "http://blog.livedoor.jp/techblog/atom.xml",
       "http://tech.camph.net/feed",
       "http://techblog.rakuten.co.jp/index.xml",
       "http://adtech.cyberagent.io/scalablog/feed",
@@ -41,25 +42,27 @@ require 'rss'
 fh.each do |url|
     puts "URL: " + url
     begin
-        rss = open(url){|file| RSS::Parser.parse(file.read)}
+        #rss = open(url){|file| RSS::Parser.parse(file.read)}
+        rss = FeedNormalizer::FeedNormalizer.parse open(url)
     rescue => ex
         puts ex.message
         next
     end
-    puts "Site: " + rss.channel.title
-
-    rss.items.each do |item|
-
+    puts "Site: " + rss.title.force_encoding("utf-8")
+    puts "url: " + rss.url.force_encoding("utf-8")
+    n = 0
+    rss.entries.each do |item|
+    	n = n + 1
         #puts "Title: " + item.title
         #puts item.date
         # get hatebu count
         begin
-             count = open("http://api.b.st-hatena.com/entry.count?url=" + item.link).read
+             count = open("http://api.b.st-hatena.com/entry.count?url=" + item.url).read
          rescue => ex
              puts ex.message
              next
          end
-        # puts "Hatebu Count: " + count
-        Infomation.create(siteName:rss.channel.title, siteURL:rss.channel.link, title:item.title, description:item.description, date:item.pubDate.inspect, url:item.link ,stocked:0,liked:0,hatebu:count)
+        puts "gets: " + n.to_s  
+        Infomation.create(siteName:rss.title.force_encoding("utf-8"), siteURL:rss.url.force_encoding("utf-8"), title:item.title.force_encoding("utf-8"), description:item.description.to_s.force_encoding("utf-8"), date:item.last_updated, url:item.url.force_encoding("utf-8") ,stocked:0,liked:0,hatebu:count)
     end
 end
