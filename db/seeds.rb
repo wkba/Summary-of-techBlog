@@ -115,6 +115,7 @@ end
 
 
 fh = [
+  "http://klabgames.tech.blog.jp.klab.com/index.rdf",
   "http://blog.mwed.info/feed.xml",
   "http://engineer.wantedly.com/feed.xml",
   # "http://klabgames.tech.blog.jp.klab.com/atom.xml",
