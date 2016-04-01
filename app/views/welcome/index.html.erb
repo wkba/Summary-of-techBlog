@@ -56,11 +56,15 @@
 
           <h6 class="list-group-item-text">
             <% if @status == "new" %>
-              <%= DateTime.parse(entry.date).strftime("%Y年 %m月 %d日 %H:%M")%>
+              <% if entry.date != nil %>
+                <%= DateTime.parse(entry.date).strftime("%Y年 %m月 %d日 %H:%M")%>
+              <% end %>
             <%elsif @status == "hatebu"%>
-              <%= entry.hatebu%> :book marks
+                <%= entry.hatebu%> :book marks
             <%else%>
-              <%= DateTime.parse(entry.date).strftime("%Y年 %m月 %d日 %H:%M")%>
+              <% if entry.date != nil %>
+                <%= DateTime.parse(entry.date).strftime("%Y年 %m月 %d日 %H:%M")%>
+              <% end %>
             <% end %>
           </h6>
 
