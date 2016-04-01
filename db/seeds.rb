@@ -167,11 +167,22 @@ end
 
 eureka = Eureka()
 eureka.each do |item|
-  Infomation.create(siteName:item[0], siteURL:item[1], title:item[2], description:item[3], date:item[4], url:item[5], stocked:0, liked:0, hatebu:0)
+  begin
+    count = open("http://api.b.st-hatena.com/entry.count?url=" + item[5]).read
+  rescue => ex
+    puts ex.message
+    next
+  end
+  Infomation.create(siteName:item[0], siteURL:item[1], title:item[2], description:item[3], date:item[4], url:item[5], stocked:0, liked:0, hatebu:count)
 end
 
 gunosy = Gunosy()
 gunosy.each do |item|
-  p item
-  Infomation.create(siteName:item[0], siteURL:item[1], title:item[2], description:item[3], date:item[4], url:item[5], stocked:0, liked:0, hatebu:0)
+  begin
+    count = open("http://api.b.st-hatena.com/entry.count?url=" + item[5]).read
+  rescue => ex
+    puts ex.message
+    next
+  end
+  Infomation.create(siteName:item[0], siteURL:item[1], title:item[2], description:item[3], date:item[4], url:item[5], stocked:0, liked:0, hatebu:count)
 end
