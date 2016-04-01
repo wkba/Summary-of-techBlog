@@ -1,110 +1,111 @@
 desc "This task is called by the Heroku cron add-on"
+
+def Eureka
+  target_url = 'https://developers.eure.jp'
+  siteName=""
+  siteURL =""
+  title =[]
+  description=[]
+  date =[]
+  url =[]
+  count = 0
+  charset = nil
+  
+  html = open(target_url) do |f|
+    charset = f.charset
+    f.read
+  end
+
+  doc = Nokogiri::HTML.parse(html, nil, charset)
+
+  doc.xpath('//div[@class="mainLogo"]').each do |node|
+    siteURL = node.css('a').attribute('href').text
+    siteName = node.css('span').text
+  end
+
+  doc.xpath('//h2[@class="articleTitle"]').each do |node|
+    title << node.css('a').text 
+    url << node.css('a').attribute('href').text
+    count = count + 1
+    #p node.css('img').attribute('src').value
+    # 記事のサムネイル画像
+    #p node.css('a').attribute('href').value
+    # p siteName + ":" + title +":"+ url
+  end
+
+  doc.xpath('//div[@class="articleText"]').each do |node|
+    description << node.css('a').text
+  end
+
+  doc.xpath('//ul[@class="articleInfoList"]').each do |node|
+    date << node.css('li').first.text
+  end
+
+  arr = Array.new(count){ Array.new(6) }
+  count.times do |n|
+    arr[n][0]=siteName
+    arr[n][1]=siteURL
+    arr[n][2]=title[n]
+    arr[n][3]=description[n]
+    arr[n][4]=Time.parse(date[n])
+    arr[n][5]=url[n]
+  end
+  return arr
+end
+
+def Gunosy
+  target_url = 'http://gunosy.github.io'
+  siteName=""
+  siteURL =""
+  title =[]
+  description=[]
+  date =[]
+  url =[]
+  count = 0
+  charset = nil
+  
+  html = open(target_url) do |f|
+    charset = f.charset
+    f.read
+  end
+
+  doc = Nokogiri::HTML.parse(html, nil, charset)
+
+  doc.xpath('//h1[@class="title"]').each do |node|
+    siteURL = node.css('a').attribute('href').text
+    siteName = node.css('a').text
+  end
+
+  doc.xpath('//li').each do |node|
+    count = count + 1
+    title << node.css('a').text 
+    url << node.css('a').attribute('href').text
+    description << "test"
+  end
+
+  doc.xpath('//span[@class="date"]').each do |node|
+    date << node.text
+  end
+  
+  arr = Array.new(count){ Array.new(6) }
+  count.times do |n|
+    arr[n][0]=siteName
+    arr[n][1]=siteURL
+    arr[n][2]=title[n]
+    arr[n][3]=description[n]
+    arr[n][4]=Time.parse(date[n])
+    arr[n][5]=url[n]
+  end
+  return arr
+end
+
 task :call_page => :environment do
   require 'net/http'
   require 'open-uri'
   require 'feed-normalizer'
   require 'nokogiri'
-  require 'Time'
+  require "date"
 
-
-  def Eureka
-    target_url = 'https://developers.eure.jp'
-    siteName=""
-    siteURL =""
-    title =[]
-    description=[]
-    date =[]
-    url =[]
-    count = 0
-    charset = nil
-    
-    html = open(target_url) do |f|
-      charset = f.charset
-      f.read
-    end
-
-    doc = Nokogiri::HTML.parse(html, nil, charset)
-
-    doc.xpath('//div[@class="mainLogo"]').each do |node|
-      siteURL = node.css('a').attribute('href').text
-      siteName = node.css('span').text
-    end
-
-    doc.xpath('//h2[@class="articleTitle"]').each do |node|
-      title << node.css('a').text 
-      url << node.css('a').attribute('href').text
-      count = count + 1
-      #p node.css('img').attribute('src').value
-      # 記事のサムネイル画像
-      #p node.css('a').attribute('href').value
-      # p siteName + ":" + title +":"+ url
-    end
-
-    doc.xpath('//div[@class="articleText"]').each do |node|
-      description << node.css('a').text
-    end
-
-    doc.xpath('//ul[@class="articleInfoList"]').each do |node|
-      date << node.css('li').first.text
-    end
-
-    arr = Array.new(count){ Array.new(6) }
-    count.times do |n|
-      arr[n][0]=siteName
-      arr[n][1]=siteURL
-      arr[n][2]=title[n]
-      arr[n][3]=description[n]
-      arr[n][4]=Time.parse(date[n])
-      arr[n][5]=url[n]
-    end
-    return arr
-  end
-
-  def Gunosy
-    target_url = 'http://gunosy.github.io'
-    siteName=""
-    siteURL =""
-    title =[]
-    description=[]
-    date =[]
-    url =[]
-    count = 0
-    charset = nil
-    
-    html = open(target_url) do |f|
-      charset = f.charset
-      f.read
-    end
-
-    doc = Nokogiri::HTML.parse(html, nil, charset)
-
-    doc.xpath('//h1[@class="title"]').each do |node|
-      siteURL = node.css('a').attribute('href').text
-      siteName = node.css('a').text
-    end
-
-    doc.xpath('//li').each do |node|
-      count = count + 1
-      title << node.css('a').text 
-      url << node.css('a').attribute('href').text
-      description << "test"
-    end
-
-    doc.xpath('//span[@class="date"]').each do |node|
-      date << node.text
-    end
-    
-    arr = Array.new(count){ Array.new(6) }
-    count.times do |n|
-      arr[n][0]=siteName
-      arr[n][1]=siteURL
-      arr[n][2]=title[n]
-      arr[n][3]=description[n]
-      arr[n][4]=Time.parse(date[n])
-      arr[n][5]=url[n]
-    end
-    return arr
-  end
   eureka = Eureka()
   eureka.each do |item|
     Infomation.create(siteName:item[0], siteURL:item[1], title:item[2], description:item[3], date:item[4], url:item[5], stocked:0, liked:0, hatebu:0)
@@ -174,5 +175,4 @@ task :call_page => :environment do
           end
       end
   end
-
 end
