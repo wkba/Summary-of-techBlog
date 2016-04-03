@@ -8,6 +8,7 @@
     <% if logged_in? %>
       <li><%= link_to '新着順', root_path(sort:"new")%></li>
       <li><%= link_to 'はてぶ順', root_path(sort:"hatebu") %></li>
+      <li><%= link_to '注目度順', root_path(sort:"attention") %></li>
       <li role="presentation" class="divider"></li>
       <li><%= link_to 'LIKE', root_path(sort:"like")%></li>
       <li><%= link_to '後で読む', root_path(sort:"later")%></li>

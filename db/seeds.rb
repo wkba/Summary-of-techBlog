@@ -161,7 +161,11 @@ fh.each do |url|
              next
          end
         puts "gets: " + n.to_s  
-        Infomation.create(siteName:rss.title.force_encoding("utf-8"), siteURL:rss.url.force_encoding("utf-8"), title:item.title.force_encoding("utf-8"), description:item.description.to_s.force_encoding("utf-8"), date:Time.parse(item.last_updated.to_s), url:item.url.force_encoding("utf-8") ,stocked:0,liked:0,hatebu:count)
+        unless Infomation.create(siteName:rss.title.force_encoding("utf-8"), siteURL:rss.url.force_encoding("utf-8"), title:item.title.force_encoding("utf-8"), description:item.description.to_s.force_encoding("utf-8"), date:Time.parse(item.last_updated.to_s), url:item.url.force_encoding("utf-8") ,stocked:0,liked:0,hatebu:count,attention:0) then
+          entry = Infomation.find_by(url: item.url.force_encoding("utf-8"))
+          attention = count - entry.attention
+          entry.update(attention: attention)
+        end
     end
 end
 

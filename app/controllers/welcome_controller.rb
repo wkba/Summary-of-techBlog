@@ -95,6 +95,8 @@ class WelcomeController < ApplicationController
       info = Infomation.page(params[:page]).per(PER).order(:date).reverse_order.where.not(id: id_arr)
     elsif status == "hatebu"
       info = Infomation.page(params[:page]).per(PER).order(:hatebu).reverse_order.where.not(id: id_arr).where.not(hatebu: 0)
+    elsif status == "attention"
+      info = Infomation.page(params[:page]).per(PER).order(:attention).reverse_order.where.not(id: id_arr).where.not(attention: 0)
     elsif status == "like"
       info = BlogInfo.page(params[:page]).per(PER).order(:date).reverse_order.where("user_id = ?",@user_id.to_s)
     elsif status == "later"
@@ -108,6 +110,8 @@ class WelcomeController < ApplicationController
       return "新着順"
     elsif status == "hatebu"
       return "はてぶ順"
+    elsif status == "attention"
+      return "注目度順"
     elsif status == "like"
       return "LIKE"
     elsif status == "later"
