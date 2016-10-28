@@ -1,4 +1,4 @@
 == README
 
 旧address  
-http://tech.pj7.link/
+http://tech.pj7.link
